@@ -23,8 +23,20 @@
       overflow: hidden;
     }
 
+    /* --- NEW CODE FOR PARTICLE BACKGROUND --- */
+    #tsparticles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1; /* Sits behind the logo */
+    }
+
     .logo-wrapper {
       position: relative;
+      /* --- Z-INDEX ADDED TO KEEP LOGO ON TOP --- */
+      z-index: 2; 
       width: 600px;
       height: 600px;
       display: flex;
@@ -194,19 +206,15 @@
       animation: fadeIn 2s ease-out 0.5s both;
     }
     
-    /* --- NEW CODE STARTS HERE --- */
-
     .dev-notice {
       font-size: 0.8em;
       font-weight: 400;
-      color: #ffc400; /* Amber/gold for notice text */
+      color: #ffc400;
       text-shadow: 0 0 8px rgba(255, 196, 0, 0.5);
       margin-top: 25px;
       line-height: 1.6;
-      animation: fadeIn 2s ease-out 1s both; /* Appears after subtitle */
+      animation: fadeIn 2s ease-out 1s both;
     }
-
-    /* --- NEW CODE ENDS HERE --- */
 
     @media (max-width: 768px) {
       .logo-wrapper {
@@ -215,59 +223,27 @@
         max-width: 500px;
         max-height: 500px;
       }
-      
-      .title { 
-        font-size: 2.5em;
-      }
-      
-      .subtitle { 
-        font-size: 0.9em;
-        letter-spacing: 6px;
-      }
-      
-      .bars { 
-        height: 45px;
-        gap: 6px;
-      }
-
-      .bar {
-        width: 6px;
-      }
-      
-      /* --- NEW CODE FOR RESPONSIVENESS --- */
-      .dev-notice {
-        font-size: 0.7em;
-      }
+      .title { font-size: 2.5em; }
+      .subtitle { font-size: 0.9em; letter-spacing: 6px; }
+      .bars { height: 45px; gap: 6px; }
+      .bar { width: 6px; }
+      .dev-notice { font-size: 0.7em; }
     }
 
     @media (max-width: 480px) {
-      .title { 
-        font-size: 1.8em;
-      }
-      
-      .subtitle { 
-        font-size: 0.75em;
-        letter-spacing: 4px;
-      }
-      
-      .bars { 
-        height: 35px;
-        gap: 5px;
-      }
-
-      .bar {
-        width: 5px;
-      }
-
-      /* --- NEW CODE FOR RESPONSIVENESS --- */
-      .dev-notice {
-        font-size: 0.65em;
-        margin-top: 20px;
-      }
+      .title { font-size: 1.8em; }
+      .subtitle { font-size: 0.75em; letter-spacing: 4px; }
+      .bars { height: 35px; gap: 5px; }
+      .bar { width: 5px; }
+      .dev-notice { font-size: 0.65em; margin-top: 20px; }
     }
   </style>
 </head>
 <body>
+  
+  <!-- Particle canvas element -->
+  <div id="tsparticles"></div>
+
   <div class="logo-wrapper">
     <div class="circle-bg"></div>
     <div class="logo-container">
@@ -285,7 +261,6 @@
       <div class="title">Pluto<br>RePublic</div>
       <div class="divider"></div>
       <div class="subtitle">SOUND FROM PLUTO</div>
-      <!-- --- NEW HTML ELEMENT --- -->
       <div class="dev-notice">
         Website is under development.<br>
         Developer may have paused development due to queue workload.<br>
@@ -293,5 +268,79 @@
       </div>
     </div>
   </div>
+
+  <!-- tsParticles library -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.3.4/tsparticles.bundle.min.js"></script>
+  
+  <!-- Particle configuration script -->
+  <script>
+    tsParticles.load("tsparticles", {
+      fpsLimit: 60,
+      particles: {
+        number: {
+          value: 100,
+          density: {
+            enable: true,
+            value_area: 800
+          }
+        },
+        color: {
+          value: "#ffffff"
+        },
+        shape: {
+          type: "circle"
+        },
+        opacity: {
+          value: 0.5,
+          random: true,
+        },
+        size: {
+          value: 3,
+          random: true,
+        },
+        links: {
+          enable: true,
+          distance: 150,
+          color: "#ffffff",
+          opacity: 0.4,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 2,
+          direction: "none",
+          random: false,
+          straight: false,
+          out_mode: "out",
+          bounce: false,
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: {
+            enable: true,
+            mode: "repulse"
+          },
+          onclick: {
+            enable: true,
+            mode: "push"
+          },
+          resize: true
+        },
+        modes: {
+          repulse: {
+            distance: 100,
+            duration: 0.4
+          },
+          push: {
+            particles_nb: 4
+          }
+        }
+      },
+      detectRetina: true
+    });
+  </script>
+
 </body>
 </html>
